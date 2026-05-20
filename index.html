@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Printing Affairs – Where Ideas Meet Ink</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f5f0e8;
+    --cream: #faf7f2;
+    --accent: #c8360a;
+    --gold: #d4a843;
+    --mid: #4a4540;
+    --light: #e8e2d9;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212,168,67,0.2);
+    transition: padding 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--accent);
+    color: var(--white) !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--ink) !important; }
+
+  /* hamburger */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 26px; height: 2px; background: var(--white); transition: 0.3s; }
+  .mobile-menu {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--ink); z-index: 99; flex-direction: column;
+    align-items: center; justify-content: center; gap: 2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem; letter-spacing: 0.1em;
+    color: var(--white); text-decoration: none;
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-close { position: absolute; top: 1.5rem; right: 2rem; font-size: 2rem; color: var(--white); cursor: pointer; background: none; border: none; }
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HERO ── */
+  #home { background: var(--ink); }
+
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 10rem 4rem 6rem 4rem;
+    position: relative; z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 40px; height: 1px; background: var(--gold);
+  }
+
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 8rem);
+    line-height: 0.92;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    margin-bottom: 1.8rem;
+  }
+  .hero-headline em {
+    font-style: normal; color: var(--gold);
+    -webkit-text-stroke: 0px;
+  }
+  .hero-headline .outline {
+    -webkit-text-stroke: 2px var(--white);
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem; line-height: 1.7;
+    color: rgba(255,255,255,0.6);
+    max-width: 440px; margin-bottom: 3rem;
+  }
+
+  .hero-actions { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--white);
+    padding: 1rem 2.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: none; border-radius: 2px; cursor: pointer;
+    text-decoration: none; display: inline-block;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold); color: var(--ink); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 1rem 2.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.35); border-radius: 2px;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+  }
+  .hero-right::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to right, var(--ink) 0%, transparent 40%);
+    z-index: 1;
+  }
+  .hero-img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(0.55) saturate(0.8);
+  }
+
+  /* hero visual fallback */
+  .hero-visual {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d1a10 50%, #0a0a0a 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14rem; letter-spacing: -0.05em;
+    color: rgba(200,54,10,0.12); user-select: none;
+    line-height: 1;
+  }
+
+  .hero-stats {
+    position: absolute; bottom: 3rem; left: 4rem; z-index: 3;
+    display: flex; gap: 3rem;
+  }
+  .stat-item {}
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem; color: var(--white); line-height: 1;
+  }
+  .stat-num span { color: var(--gold); }
+  .stat-label {
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); margin-top: 0.2rem;
+  }
+
+  /* marquee */
+  .marquee-strip {
+    background: var(--accent);
+    overflow: hidden; white-space: nowrap;
+    padding: 0.9rem 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 22s linear infinite;
+  }
+  .marquee-inner span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 0.18em;
+    color: var(--white); margin: 0 2rem;
+  }
+  .marquee-inner span.dot { color: rgba(255,255,255,0.4); margin: 0 0.5rem; font-size: 0.6rem; vertical-align: middle; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── SERVICES ── */
+  #services {
+    background: var(--cream);
+    padding-top: 7rem;
+  }
+
+  .section-header {
+    text-align: center;
+    padding: 0 2rem 4rem;
+  }
+  .section-tag {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+  }
+  .section-tag::before, .section-tag::after {
+    content: ''; display: block; width: 30px; height: 1px; background: var(--accent);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    color: var(--ink); line-height: 1.1;
+    margin-bottom: 1.2rem;
+  }
+  .section-sub {
+    font-size: 1rem; color: var(--mid);
+    max-width: 520px; margin: 0 auto; line-height: 1.7;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--light);
+    border-left: 1px solid var(--light);
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .service-card {
+    border-right: 1px solid var(--light);
+    border-bottom: 1px solid var(--light);
+    padding: 2.5rem;
+    position: relative;
+    transition: background 0.3s;
+    cursor: default;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { background: var(--white); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    font-size: 2.2rem; margin-bottom: 1.2rem;
+    display: block;
+  }
+  .service-num {
+    position: absolute; top: 2rem; right: 2.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; color: rgba(0,0,0,0.05);
+    line-height: 1;
+  }
+  .service-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    margin-bottom: 0.8rem; color: var(--ink);
+  }
+  .service-desc {
+    font-size: 0.9rem; line-height: 1.65;
+    color: var(--mid);
+  }
+  .service-items {
+    margin-top: 1rem; list-style: none;
+  }
+  .service-items li {
+    font-size: 0.82rem; color: var(--mid);
+    padding: 0.3rem 0;
+    border-top: 1px solid var(--light);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .service-items li::before { content: '→'; color: var(--accent); font-size: 0.75rem; }
+
+  /* featured service */
+  .service-card.featured {
+    background: var(--ink);
+    grid-row: span 1;
+  }
+  .service-card.featured .service-name { color: var(--white); }
+  .service-card.featured .service-desc { color: rgba(255,255,255,0.6); }
+  .service-card.featured .service-items li { color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.1); }
+  .service-card.featured .service-num { color: rgba(255,255,255,0.05); }
+  .service-card.featured::before { background: var(--gold); }
+
+  /* promo banner */
+  .promo-banner {
+    background: var(--ink); color: var(--white);
+    padding: 4rem; margin-top: 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 2rem; flex-wrap: wrap;
+    max-width: 1200px; margin: 4rem auto 0;
+  }
+  .promo-text h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .promo-text p { color: rgba(255,255,255,0.6); font-size: 0.95rem; }
+  .promo-text h3 span { color: var(--gold); }
+
+  /* ── ABOUT ── */
+  #about { background: var(--white); padding-top: 7rem; }
+
+  .about-hero {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 70vh; max-width: 1400px; margin: 0 auto;
+  }
+
+  .about-visual {
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    min-height: 500px;
+  }
+  .about-pattern {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(212,168,67,0.03) 10px, rgba(212,168,67,0.03) 11px),
+      repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(212,168,67,0.03) 10px, rgba(212,168,67,0.03) 11px);
+  }
+  .about-big-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 10rem; line-height: 0.85;
+    color: rgba(255,255,255,0.06);
+    position: absolute; bottom: 2rem; left: 2rem; right: 2rem;
+    letter-spacing: -0.02em;
+  }
+  .about-logo-center {
+    position: relative; z-index: 2;
+    text-align: center;
+  }
+  .about-logo-center .logo-main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; letter-spacing: 0.15em;
+    color: var(--white); display: block;
+    line-height: 1;
+  }
+  .about-logo-center .logo-sub {
+    font-size: 0.8rem; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--gold);
+    margin-top: 0.5rem; display: block;
+  }
+  .about-logo-center .logo-divider {
+    width: 60px; height: 2px; background: var(--accent);
+    margin: 1rem auto;
+  }
+  .about-logo-center .est {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 1rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .about-content {
+    padding: 5rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .about-content .section-tag { justify-content: flex-start; }
+  .about-content .section-tag::before { display: none; }
+  .about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.15; margin-bottom: 1.5rem; color: var(--ink);
+  }
+  .about-title em { font-style: italic; color: var(--accent); }
+
+  .about-body {
+    font-size: 0.98rem; line-height: 1.8;
+    color: var(--mid); margin-bottom: 2rem;
+  }
+
+  .about-values {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.2rem; margin-top: 2rem;
+  }
+  .value-item {
+    padding: 1.2rem;
+    border: 1px solid var(--light);
+    border-radius: 2px;
+  }
+  .value-item h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.4rem;
+  }
+  .value-item p { font-size: 0.88rem; color: var(--mid); line-height: 1.5; }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--ink);
+    padding-top: 7rem; padding-bottom: 0;
+  }
+
+  .contact-wrapper {
+    display: grid; grid-template-columns: 1fr 1fr;
+    max-width: 1200px; margin: 0 auto;
+    gap: 0;
+  }
+
+  .contact-info {
+    padding: 3rem 4rem 5rem;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .contact-info .section-tag { justify-content: flex-start; color: var(--gold); }
+  .contact-info .section-tag::before { display: none; }
+  .contact-info .section-tag::after { background: var(--gold); }
+  .contact-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    color: var(--white); line-height: 0.95;
+    letter-spacing: 0.03em; margin-bottom: 1.5rem;
+  }
+  .contact-title span { color: var(--accent); }
+  .contact-tagline {
+    font-size: 1rem; line-height: 1.7;
+    color: rgba(255,255,255,0.5); margin-bottom: 3rem;
+  }
+
+  .contact-details { display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-item {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+  }
+  .contact-item-icon {
+    width: 42px; height: 42px; flex-shrink: 0;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .contact-item-body {}
+  .contact-item-label {
+    font-size: 0.7rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 0.25rem;
+  }
+  .contact-item-value {
+    font-size: 0.95rem; color: rgba(255,255,255,0.75);
+    line-height: 1.5;
+  }
+  .contact-item-value a {
+    color: inherit; text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-item-value a:hover { color: var(--gold); }
+
+  .social-row {
+    display: flex; gap: 1rem; margin-top: 2.5rem;
+  }
+  .social-btn {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.7rem 1.3rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 2px;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.82rem; letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .social-btn:hover {
+    border-color: var(--gold); color: var(--gold);
+    background: rgba(212,168,67,0.08);
+  }
+
+  .contact-form-area {
+    padding: 3rem 4rem 5rem;
+  }
+  .contact-form-area h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .contact-form-area p {
+    font-size: 0.88rem; color: rgba(255,255,255,0.4);
+    margin-bottom: 2rem;
+  }
+
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label {
+    display: block; font-size: 0.72rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); margin-bottom: 0.5rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px;
+    padding: 0.85rem 1rem;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-group select option { background: var(--ink); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .btn-submit {
+    width: 100%; padding: 1rem;
+    background: var(--accent);
+    border: none; border-radius: 2px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+  .btn-submit:hover { background: var(--gold); color: var(--ink); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050505;
+    padding: 2rem 4rem;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-copy {
+    font-size: 0.78rem; color: rgba(255,255,255,0.25);
+    text-align: center;
+  }
+  .footer-socials { display: flex; gap: 1rem; }
+  .footer-socials a {
+    font-size: 0.78rem; color: rgba(255,255,255,0.3);
+    text-decoration: none; letter-spacing: 0.1em;
+    transition: color 0.2s;
+  }
+  .footer-socials a:hover { color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate { animation: fadeUp 0.7s ease forwards; }
+  .delay-1 { animation-delay: 0.15s; opacity: 0; }
+  .delay-2 { animation-delay: 0.3s; opacity: 0; }
+  .delay-3 { animation-delay: 0.45s; opacity: 0; }
+  .delay-4 { animation-delay: 0.6s; opacity: 0; }
+
+  /* toast */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    background: var(--gold); color: var(--ink);
+    padding: 1rem 1.5rem; border-radius: 2px;
+    font-size: 0.88rem; font-weight: 500;
+    transform: translateY(100px); opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 8rem 2rem 3rem; }
+    .hero-right { height: 300px; }
+    .hero-stats { left: 2rem; bottom: 2rem; gap: 1.5rem; }
+    .stat-num { font-size: 2rem; }
+
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .service-card.featured { grid-column: span 2; }
+
+    .about-hero { grid-template-columns: 1fr; }
+    .about-visual { min-height: 300px; }
+    .about-content { padding: 3rem 2rem; }
+
+    .contact-wrapper { grid-template-columns: 1fr; }
+    .contact-info { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 3rem 2rem; }
+    .contact-form-area { padding: 3rem 2rem; }
+
+    footer { padding: 1.5rem 2rem; }
+    .promo-banner { padding: 2.5rem 2rem; }
+  }
+
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card.featured { grid-column: span 1; }
+    .about-values { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 1rem; }
+    .social-row { flex-wrap: wrap; }
+    .hero-left { padding: 7rem 1.5rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#" onclick="showPage('home')">PRINTING <span>AFFAIRS</span></a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')">Home</a></li>
+    <li><a href="#" onclick="showPage('services')">Services</a></li>
+    <li><a href="#" onclick="showPage('about')">About Us</a></li>
+    <li><a href="#" onclick="showPage('contact')" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <div class="hamburger" onclick="openMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="#" onclick="showPage('home');closeMobile()">Home</a>
+  <a href="#" onclick="showPage('services');closeMobile()">Services</a>
+  <a href="#" onclick="showPage('about');closeMobile()">About Us</a>
+  <a href="#" onclick="showPage('contact');closeMobile()">Get a Quote</a>
+</div>
+
+<!-- ═══════════════ HOME ═══════════════ -->
+<div id="home" class="page active">
+
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow animate">Ghana's Premier Printing House</p>
+      <h1 class="hero-headline animate delay-1">
+        YOUR BRAND,<br>
+        <em>BOLDLY</em><br>
+        <span class="outline">PRINTED.</span>
+      </h1>
+      <p class="hero-sub animate delay-2">
+        From custom T-shirts and signage to business cards and banners — Printing Affairs brings your vision to life with precision, quality, and speed.
+      </p>
+      <div class="hero-actions animate delay-3">
+        <a href="#" onclick="showPage('services')" class="btn-primary">Explore Services</a>
+        <a href="#" onclick="showPage('contact')" class="btn-outline">Get a Quote</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual">PA</div>
+    </div>
+
+    <div class="hero-stats animate delay-4">
+      <div class="stat-item">
+        <div class="stat-num">500<span>+</span></div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">12<span>+</span></div>
+        <div class="stat-label">Print Services</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">24<span>hr</span></div>
+        <div class="stat-label">Rush Available</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>T-SHIRT PRINTING</span><span class="dot">●</span>
+      <span>SIGNAGE & BANNERS</span><span class="dot">●</span>
+      <span>BUSINESS CARDS</span><span class="dot">●</span>
+      <span>BRANDED MERCHANDISE</span><span class="dot">●</span>
+      <span>FLEX PRINTING</span><span class="dot">●</span>
+      <span>CORPORATE GIFTS</span><span class="dot">●</span>
+      <span>EMBROIDERY</span><span class="dot">●</span>
+      <span>STICKERS & LABELS</span><span class="dot">●</span>
+      <!-- dupe for seamless loop -->
+      <span>T-SHIRT PRINTING</span><span class="dot">●</span>
+      <span>SIGNAGE & BANNERS</span><span class="dot">●</span>
+      <span>BUSINESS CARDS</span><span class="dot">●</span>
+      <span>BRANDED MERCHANDISE</span><span class="dot">●</span>
+      <span>FLEX PRINTING</span><span class="dot">●</span>
+      <span>CORPORATE GIFTS</span><span class="dot">●</span>
+      <span>EMBROIDERY</span><span class="dot">●</span>
+      <span>STICKERS & LABELS</span><span class="dot">●</span>
+    </div>
+  </div>
+
+  <!-- WHY US strip -->
+  <section style="background:var(--white); padding:5rem 4rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="section-tag" style="justify-content:center">Why Choose Us</div>
+      <h2 class="section-title" style="text-align:center;margin-bottom:3.5rem">Quality You Can See.<br>Service You Can Feel.</h2>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;">
+        <div style="text-align:center;padding:2rem 1.5rem;border:1px solid var(--light);">
+          <div style="font-size:2.2rem;margin-bottom:1rem;">🎨</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.6rem;">Vivid Colours</h3>
+          <p style="font-size:0.85rem;color:var(--mid);line-height:1.6;">Industry-grade inks that stay bright wash after wash, fade after fade.</p>
+        </div>
+        <div style="text-align:center;padding:2rem 1.5rem;border:1px solid var(--light);">
+          <div style="font-size:2.2rem;margin-bottom:1rem;">⚡</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.6rem;">Fast Turnaround</h3>
+          <p style="font-size:0.85rem;color:var(--mid);line-height:1.6;">Standard and rush delivery options to meet your deadlines every time.</p>
+        </div>
+        <div style="text-align:center;padding:2rem 1.5rem;border:1px solid var(--light);">
+          <div style="font-size:2.2rem;margin-bottom:1rem;">📦</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.6rem;">Bulk Orders</h3>
+          <p style="font-size:0.85rem;color:var(--mid);line-height:1.6;">Significant discounts for corporate and large-volume print orders.</p>
+        </div>
+        <div style="text-align:center;padding:2rem 1.5rem;border:1px solid var(--light);">
+          <div style="font-size:2.2rem;margin-bottom:1rem;">🤝</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:0.6rem;">Expert Support</h3>
+          <p style="font-size:0.85rem;color:var(--mid);line-height:1.6;">Our design team helps polish your artwork before it ever hits the press.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA banner -->
+  <section style="background:var(--ink);padding:5rem 4rem;text-align:center;">
+    <p style="font-size:0.75rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">Ready to Start?</p>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,5rem);color:var(--white);letter-spacing:0.04em;line-height:1;margin-bottom:1.5rem;">LET'S MAKE SOMETHING <span style="color:var(--accent)">GREAT.</span></h2>
+    <p style="color:rgba(255,255,255,0.5);font-size:1rem;margin-bottom:2.5rem;">Contact us today for a free consultation and quote.</p>
+    <a href="#" onclick="showPage('contact')" class="btn-primary" style="font-size:0.9rem;padding:1.1rem 2.8rem;">Get Your Free Quote</a>
+  </section>
+
+  <footer>
+    <div class="footer-logo">PRINTING <span>AFFAIRS</span></div>
+    <div class="footer-copy">© 2025 Printing Affairs. All rights reserved.</div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/printingaffairsgh" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/printingaffairsgh" target="_blank">Facebook</a>
+      <a href="https://www.tiktok.com/@printingaffairsgh" target="_blank">TikTok</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════ SERVICES ═══════════════ -->
+<div id="services" class="page">
+  <div style="background:var(--ink);padding:8rem 4rem 5rem;text-align:center;">
+    <p class="section-tag" style="color:var(--gold);justify-content:center;">What We Offer</p>
+    <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,7rem);color:var(--white);letter-spacing:0.03em;line-height:0.9;margin-bottom:1.5rem;">OUR <span style="color:var(--accent)">SERVICES</span></h1>
+    <p style="color:rgba(255,255,255,0.5);font-size:1rem;max-width:500px;margin:0 auto;line-height:1.7;">Everything you need to put your brand on the world — under one roof.</p>
+  </div>
+
+  <section style="padding:5rem 4rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="section-tag" style="justify-content:center">Core Services</div>
+      <h2 class="section-title" style="text-align:center;margin-bottom:3rem">Print Solutions for Every Need</h2>
+      <div class="services-grid">
+
+        <div class="service-card featured">
+          <span class="service-num">01</span>
+          <span class="service-icon">👕</span>
+          <h3 class="service-name">T-Shirt & Apparel Printing</h3>
+          <p class="service-desc">Custom garment printing for events, schools, corporates, and personal orders. We handle everything from single pieces to bulk runs.</p>
+          <ul class="service-items">
+            <li>Screen Printing</li>
+            <li>Heat Transfer / DTG</li>
+            <li>Embroidery</li>
+            <li>Polo Shirts, Hoodies, Caps</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <span class="service-num">02</span>
+          <span class="service-icon">🪧</span>
+          <h3 class="service-name">Signage & Banners</h3>
+          <p class="service-desc">Eye-catching outdoor and indoor signage that commands attention and communicates your message clearly.</p>
+          <ul class="service-items">
+            <li>Flex & Vinyl Banners</li>
+            <li>Roll-Up Stands</li>
+            <li>Billboards & Backdrops</li>
+            <li>Event Signage</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <span class="service-num">03</span>
+          <span class="service-icon">💼</span>
+          <h3 class="service-name">Business Stationery</h3>
+          <p class="service-desc">Professional print materials that make a lasting first impression for your brand in every interaction.</p>
+          <ul class="service-items">
+            <li>Business Cards</li>
+            <li>Letterheads & Envelopes</li>
+            <li>Brochures & Flyers</li>
+            <li>Compliment Slips</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <span class="service-num">04</span>
+          <span class="service-icon">🎁</span>
+          <h3 class="service-name">Branded Merchandise</h3>
+          <p class="service-desc">Turn everyday items into brand ambassadors. Perfect for corporate giveaways, events, and promotions.</p>
+          <ul class="service-items">
+            <li>Mugs & Bottles</li>
+            <li>Tote Bags & Backpacks</li>
+            <li>Pens & Notepads</li>
+            <li>Phone Cases & Cushions</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <span class="service-num">05</span>
+          <span class="service-icon">🖼️</span>
+          <h3 class="service-name">Large Format Printing</h3>
+          <p class="service-desc">Massive, vivid prints for trade shows, retail spaces, churches, political campaigns, and events.</p>
+          <ul class="service-items">
+            <li>Canvas & Photo Prints</li>
+            <li>Posters (All Sizes)</li>
+            <li>Vehicle Wraps & Decals</li>
+            <li>Exhibition Displays</li>
+          </ul>
+        </div>
+
+        <div class="service-card">
+          <span class="service-num">06</span>
+          <span class="service-icon">📋</span>
+          <h3 class="service-name">Stickers & Labels</h3>
+          <p class="service-desc">Custom-cut stickers, product labels, and decals for any surface. Die-cut, roll labels, or sheet format.</p>
+          <ul class="service-items">
+            <li>Die-Cut Stickers</li>
+            <li>Product / Bottle Labels</li>
+            <li>Holographic & Clear</li>
+            <li>QR Code Stickers</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Extras -->
+      <div style="margin-top:3rem;">
+        <div class="section-tag" style="justify-content:center;margin-bottom:2rem">Additional Offerings</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;">
+          <div style="padding:1.5rem;background:var(--white);border:1px solid var(--light);border-radius:2px;">
+            <div style="font-size:1.6rem;margin-bottom:0.8rem;">📅</div>
+            <h4 style="font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.95rem;margin-bottom:0.4rem;">Calendars</h4>
+            <p style="font-size:0.82rem;color:var(--mid);">Wall & desk calendars, custom photo calendars</p>
+          </div>
+          <div style="padding:1.5rem;background:var(--white);border:1px solid var(--light);border-radius:2px;">
+            <div style="font-size:1.6rem;margin-bottom:0.8rem;">🎓</div>
+            <h4 style="font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.95rem;margin-bottom:0.4rem;">Certificates</h4>
+            <p style="font-size:0.82rem;color:var(--mid);">Graduation, award & event certificates</p>
+          </div>
+          <div style="padding:1.5rem;background:var(--white);border:1px solid var(--light);border-radius:2px;">
+            <div style="font-size:1.6rem;margin-bottom:0.8rem;">📖</div>
+            <h4 style="font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.95rem;margin-bottom:0.4rem;">Booklets</h4>
+            <p style="font-size:0.82rem;color:var(--mid);">Programs, magazines, catalogues, manuals</p>
+          </div>
+          <div style="padding:1.5rem;background:var(--white);border:1px solid var(--light);border-radius:2px;">
+            <div style="font-size:1.6rem;margin-bottom:0.8rem;">🖍️</div>
+            <h4 style="font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.95rem;margin-bottom:0.4rem;">Design Services</h4>
+            <p style="font-size:0.82rem;color:var(--mid);">Logo, branding, artwork & pre-press design</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Promo -->
+      <div class="promo-banner">
+        <div class="promo-text">
+          <h3>Not sure what you need? <span>Let's talk.</span></h3>
+          <p>Our team will guide you to the best printing solution for your budget and timeline.</p>
+        </div>
+        <a href="#" onclick="showPage('contact')" class="btn-primary">Request a Quote</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">PRINTING <span>AFFAIRS</span></div>
+    <div class="footer-copy">© 2025 Printing Affairs. All rights reserved.</div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/printingaffairsgh" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/printingaffairsgh" target="_blank">Facebook</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════ ABOUT ═══════════════ -->
+<div id="about" class="page">
+  <div style="background:var(--ink);padding:8rem 4rem 5rem;text-align:center;">
+    <p class="section-tag" style="color:var(--gold);justify-content:center;">Our Story</p>
+    <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,7rem);color:var(--white);letter-spacing:0.03em;line-height:0.9;margin-bottom:1.5rem;">ABOUT <span style="color:var(--accent)">US</span></h1>
+    <p style="color:rgba(255,255,255,0.5);font-size:1rem;max-width:500px;margin:0 auto;line-height:1.7;">The passion, purpose, and people behind Printing Affairs.</p>
+  </div>
+
+  <section id="about">
+    <div class="about-hero">
+      <div class="about-visual">
+        <div class="about-pattern"></div>
+        <div class="about-big-text">PRINT<br>ING</div>
+        <div class="about-logo-center">
+          <span class="logo-main">PRINTING</span>
+          <div class="logo-divider"></div>
+          <span class="logo-main">AFFAIRS</span>
+          <div class="logo-divider"></div>
+          <span class="logo-sub">Ghana's Print Specialists</span>
+          <p class="est">Est. in Accra, Ghana</p>
+        </div>
+      </div>
+      <div class="about-content">
+        <p class="section-tag">Who We Are</p>
+        <h2 class="about-title">We Don't Just Print.<br>We <em>Craft Impressions.</em></h2>
+        <p class="about-body">
+          Printing Affairs was born from a simple but powerful belief: that every business, big or small, deserves print materials that truly represent the quality and character of their brand.
+        </p>
+        <p class="about-body">
+          Based in Accra, Ghana, we started as a small workshop with big ambitions. Over the years, we've grown into a full-service printing house trusted by entrepreneurs, corporates, schools, NGOs, churches, and event organizers across the country. What hasn't changed is our commitment — to deliver vivid, durable, and impactful print products, on time, every time.
+        </p>
+        <p class="about-body">
+          We invest in modern equipment and continuously train our team so that every order — whether it's a single business card or a thousand branded T-shirts — gets the same meticulous care and craftsmanship.
+        </p>
+        <div class="about-values">
+          <div class="value-item">
+            <h4>Quality First</h4>
+            <p>We never compromise on materials or finish. Every job is inspected before it leaves our hands.</p>
+          </div>
+          <div class="value-item">
+            <h4>Client-Centred</h4>
+            <p>We listen. We advise. We deliver exactly what you envisioned — or better.</p>
+          </div>
+          <div class="value-item">
+            <h4>Built in Ghana</h4>
+            <p>Proudly Ghanaian, serving local businesses and helping brands shine across the country.</p>
+          </div>
+          <div class="value-item">
+            <h4>Reliability</h4>
+            <p>Deadlines are sacred to us. When we say it'll be ready, it will be ready.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team / Mission section -->
+    <div style="background:var(--cream);padding:5rem 4rem;">
+      <div style="max-width:1100px;margin:0 auto;text-align:center;">
+        <div class="section-tag" style="justify-content:center">Our Mission</div>
+        <h2 class="section-title" style="margin-bottom:2rem">Empowering Brands Through Print</h2>
+        <p style="font-size:1.05rem;color:var(--mid);line-height:1.8;max-width:700px;margin:0 auto 4rem;">
+          Our mission is to be the go-to print partner for every brand in Ghana — delivering premium quality, creative expertise, and reliable service that helps our clients stand out and make lasting impressions.
+        </p>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:1rem;">
+          <div style="padding:2.5rem 2rem;background:var(--white);border:1px solid var(--light);">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--accent);line-height:1;">500<span style="font-size:2rem">+</span></div>
+            <div style="font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);margin-top:0.4rem;">Satisfied Clients</div>
+          </div>
+          <div style="padding:2.5rem 2rem;background:var(--white);border:1px solid var(--light);">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--accent);line-height:1;">12<span style="font-size:2rem">+</span></div>
+            <div style="font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);margin-top:0.4rem;">Services Offered</div>
+          </div>
+          <div style="padding:2.5rem 2rem;background:var(--white);border:1px solid var(--light);">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--accent);line-height:1;">24<span style="font-size:2rem">hr</span></div>
+            <div style="font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);margin-top:0.4rem;">Rush Orders Available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">PRINTING <span>AFFAIRS</span></div>
+    <div class="footer-copy">© 2025 Printing Affairs. All rights reserved.</div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/printingaffairsgh" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/printingaffairsgh" target="_blank">Facebook</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<div id="contact" class="page">
+  <section id="contact" style="padding-top:0;">
+    <div style="background:var(--ink);padding:8rem 4rem 3rem;text-align:center;">
+      <p class="section-tag" style="color:var(--gold);justify-content:center;">Reach Out</p>
+      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,7rem);color:var(--white);letter-spacing:0.03em;line-height:0.9;margin-bottom:1.5rem;">GET IN <span style="color:var(--accent)">TOUCH</span></h1>
+    </div>
+
+    <div class="contact-wrapper" style="background:var(--ink);">
+      <div class="contact-info">
+        <p class="section-tag" style="color:var(--gold);">Contact Information</p>
+        <h2 class="contact-title">Let's Build<br><span>Something</span><br>Together.</h2>
+        <p class="contact-tagline">Have a project in mind? Need a bulk quote? Want to discuss a custom design? We're here and ready to help.</p>
+
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-item-icon">📞</div>
+            <div class="contact-item-body">
+              <p class="contact-item-label">Phone / WhatsApp</p>
+              <p class="contact-item-value"><a href="tel:+233531400681">0531 400 681</a></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">✉️</div>
+            <div class="contact-item-body">
+              <p class="contact-item-label">Email</p>
+              <p class="contact-item-value"><a href="mailto:printingaffairs0@gmail.com">printingaffairs0@gmail.com</a></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div class="contact-item-body">
+              <p class="contact-item-label">Location</p>
+              <p class="contact-item-value">Accra, Ghana<br><span style="font-size:0.82rem;color:rgba(255,255,255,0.35);">Contact us for directions</span></p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🕐</div>
+            <div class="contact-item-body">
+              <p class="contact-item-label">Business Hours</p>
+              <p class="contact-item-value">Mon – Fri: 8:00am – 6:00pm<br>Sat: 9:00am – 4:00pm</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="social-row">
+          <a href="https://www.instagram.com/printingaffairsgh" target="_blank" class="social-btn">📸 Instagram</a>
+          <a href="https://www.facebook.com/printingaffairsgh" target="_blank" class="social-btn">📘 Facebook</a>
+          <a href="https://www.tiktok.com/@printingaffairsgh" target="_blank" class="social-btn">🎵 TikTok</a>
+        </div>
+        <p style="font-size:0.78rem;color:rgba(255,255,255,0.25);margin-top:0.8rem;">@printingaffairsgh on all platforms</p>
+      </div>
+
+      <div class="contact-form-area">
+        <h3>Send Us a Message</h3>
+        <p>Fill out the form and we'll get back to you within 24 hours.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="f-name" placeholder="Kwame Mensah">
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="f-phone" placeholder="0XX XXX XXXX">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="f-email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Service Needed</label>
+          <select id="f-service">
+            <option value="">Select a service...</option>
+            <option>T-Shirt / Apparel Printing</option>
+            <option>Signage & Banners</option>
+            <option>Business Cards & Stationery</option>
+            <option>Branded Merchandise</option>
+            <option>Large Format Printing</option>
+            <option>Stickers & Labels</option>
+            <option>Design Services</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tell Us About Your Project</label>
+          <textarea id="f-msg" placeholder="Describe what you need — quantity, size, timeline, any specific requirements..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitForm()">Send Message →</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">PRINTING <span>AFFAIRS</span></div>
+    <div class="footer-copy">© 2025 Printing Affairs. All rights reserved.</div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/printingaffairsgh" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/printingaffairsgh" target="_blank">Facebook</a>
+      <a href="https://www.tiktok.com/@printingaffairsgh" target="_blank">TikTok</a>
+    </div>
+  </footer>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Message sent! We'll be in touch soon.</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function openMobile() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  function submitForm() {
+    const name = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const service = document.getElementById('f-service').value;
+    if (!name || !email) {
+      alert('Please fill in your name and email address.');
+      return;
+    }
+    // Build mailto
+    const phone = document.getElementById('f-phone').value.trim();
+    const msg = document.getElementById('f-msg').value.trim();
+    const body = `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${msg}`;
+    const mailto = `mailto:printingaffairs0@gmail.com?subject=Quote Request – ${encodeURIComponent(service || 'General Enquiry')}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+    // Show toast
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  // Scroll nav shrink
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 60) { nav.style.padding = '0.8rem 4rem'; }
+    else { nav.style.padding = '1.2rem 4rem'; }
+  });
+</script>
+</body>
+</html>
